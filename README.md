@@ -1,7 +1,7 @@
-codeigniter-base-model
+codeigniter-better-query-builder
 =====================================
 
-[![Build Status](https://secure.travis-ci.org/jamierumbelow/codeigniter-base-model.png?branch=master)](http://travis-ci.org/jamierumbelow/codeigniter-base-model)
+[For Latest lick Here](https://github.com/waqleh/codeigniter-better-query-builder)
 
 My CodeIgniter Base Model is an extended CI_Model class to use in your CodeIgniter applications. It provides a full CRUD base to make developing database interactions easier and quicker, as well as an event-based observer system, in-model data validation, intelligent table name guessing and soft delete.
 
@@ -32,9 +32,57 @@ $this->post->delete(1);
 Installation/Usage
 ------------------
 
-Download and drag the MY\_Model.php file into your _application/core_ folder. CodeIgniter will load and initialise this class automatically for you.
+Download and drag the MY\_Model.php file into your _application/core_ folder. CodeIgniter will load and initialize this class automatically for you.
 
 Extend your model classes from `MY_Model` and all the functionality will be baked in automatically.
+
+Database table columns:
+
+    /**
+     * @var array The table's fields
+     */
+    private $fields = array(
+        /**
+        ..your table columns here..
+        ...
+        ...
+        ...
+        ...
+        Other almost required table columns
+        */
+        'created_at' => array(
+            'type' => 'DATETIME',
+            'default' => '0000-00-00 00:00:00',
+        ),
+        'created_by' => array(
+            'type' => 'BIGINT',
+            'constraint' => 20,
+            'null' => FALSE,
+        ),
+        'updated_at' => array(
+            'type' => 'DATETIME',
+            'default' => '0000-00-00 00:00:00',
+        ),
+        'updated_by' => array(
+            'type' => 'BIGINT',
+            'constraint' => 20,
+            'null' => TRUE,
+        ),
+        'deleted' => array(
+            'type' => 'TINYINT',
+            'constraint' => 1,
+            'default' => '0',
+        ),
+        'deleted_at' => array(
+            'type' => 'DATETIME',
+            'default' => '0000-00-00 00:00:00',
+        ),
+        'deleted_by' => array(
+            'type' => 'BIGINT',
+            'constraint' => 20,
+            'null' => true,
+        ),
+    ); 
 
 Naming Conventions
 ------------------
@@ -317,7 +365,7 @@ The class will automatically use the default database connection, and even load 
 
 You can specify a database connection on a per-model basis by declaring the _$\_db\_group_ instance variable. This is equivalent to calling `$this->db->database($this->_db_group, TRUE)`.
 
-See ["Connecting to your Database"](http://ellislab.com/codeigniter/user-guide/database/connecting.html) for more information.
+See ["Connecting to your Database"](https://www.codeigniter.com/userguide3/database/connecting.html) for more information.
 
 ```php
 class Post_model extends MY_Model
@@ -325,21 +373,6 @@ class Post_model extends MY_Model
     public $_db_group = 'group_name';
 }
 ```
-
-Unit Tests
-----------
-
-MY_Model contains a robust set of unit tests to ensure that the system works as planned.
-
-Install the testing framework (PHPUnit) with Composer:
-
-    $ curl -s https://getcomposer.org/installer | php
-    $ php composer.phar install
-
-You can then run the tests using the `vendor/bin/phpunit` binary and specify the tests file:
-
-    $ vendor/bin/phpunit
-
 
 Contributing to MY_Model
 ------------------------
@@ -352,48 +385,6 @@ If you find a bug or want to add a feature to MY_Model, great! In order to make 
 4. **Add tests for it. This is important so I don’t break it in a future version unintentionally.**
 5. Commit.
 6. Send me a pull request!
-
-
-Other Documentation
--------------------
-
-* My book, The CodeIgniter Handbook, talks about the techniques used in MY_Model and lots of other interesting useful stuff. [Get a copy now.](https://efendibooks.com/books/codeigniter-handbook/vol-1)
-* Jeff Madsen has written an excellent tutorial about the basics (and triggered me updating the documentation here). [Read it now, you lovely people.](http://www.codebyjeff.com/blog/2012/01/using-jamie-rumbelows-my_model)
-* Rob Allport wrote a post about MY_Model and his experiences with it. [Check it out!](http://www.web-design-talk.co.uk/493/codeigniter-base-models-rock/)
-* I've written a write up of the new 2.0.0 features [over at my blog, Jamie On Software.](http://jamieonsoftware.com/journal/2012/9/11/my_model-200-at-a-glance.html)
-
-Changelog
----------
-
-**Version 2.0.0**
-* Added support for soft deletes
-* Removed Composer support. Great system, CI makes it difficult to use for MY_ classes
-* Fixed up all problems with callbacks and consolidated into single `trigger` method
-* Added support for relationships
-* Added built-in timestamp observers
-* The DB connection can now be manually set with `$this->_db`, rather than relying on the `$active_group`
-* Callbacks can also now take parameters when setting in callback array
-* Added support for column serialisation
-* Added support for protected attributes
-* Added a `truncate()` method
-
-**Version 1.3.0**
-* Added support for array return types using `$return_type` variable and `as_array()` and `as_object()` methods
-* Added PHP5.3 support for the test suite
-* Removed the deprecated `MY_Model()` constructor
-* Fixed an issue with after_create callbacks (thanks [zbrox](https://github.com/zbrox)!)
-* Composer package will now autoload the file
-* Fixed the callback example by returning the given/modified data (thanks [druu](https://github.com/druu)!)
-* Change order of operations in `_fetch_table()` (thanks [JustinBusschau](https://github.com/JustinBusschau)!)
-
-**Version 1.2.0**
-* Bugfix to `update_many()`
-* Added getters for table name and skip validation
-* Fix to callback functionality (thanks [titosemi](https://github.com/titosemi)!)
-* Vastly improved documentation
-* Added a `get_next_id()` method (thanks [gbaldera](https://github.com/gbaldera)!)
-* Added a set of unit tests
-* Added support for [Composer](http://getcomposer.org/)
 
 **Version 1.0.0 - 1.1.0**
 * Initial Releases
