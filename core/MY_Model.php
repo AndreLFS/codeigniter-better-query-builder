@@ -40,7 +40,7 @@ class MY_Model extends CI_Model {
     protected $updated_by_key = 'updated_by';
     protected $deleted_at_key = 'deleted_at';
     protected $deleted_by_key = 'deleted_by';
-    
+
     /**
      * User ID key in session
      */
@@ -526,7 +526,7 @@ class MY_Model extends CI_Model {
         }
         return $this->_database->count_all_results($this->_table);
     }
-    
+
     /**
      * Fetch a total count of rows, disregarding any previous conditions (SOFT DELETED IS COUNTED)
      */
@@ -600,6 +600,14 @@ class MY_Model extends CI_Model {
      */
     public function only_deleted() {
         $this->_temporary_only_deleted = TRUE;
+        return $this;
+    }
+
+    /**
+     * set $this->_temporary_only_deleted to false
+     */
+    public function not_only_deleted() {
+        $this->_temporary_only_deleted = FALSE;
         return $this;
     }
 
@@ -1041,6 +1049,12 @@ class MY_Model extends CI_Model {
             $update_fields[] = $key . "=?";
         }
         return "INSERT INTO " . $table . " (" . implode(', ', $keys) . ", " . $this->created_at_key . ") VALUES (" . preg_replace('/, $/', '', preg_replace("/\?\?/", "?, ?, ", str_repeat("?", sizeof($keys)))) . ", '" . date('Y-m-d H:i:s', time()) . "') ON DUPLICATE KEY UPDATE " . implode(", ", $update_fields);
+    }
+
+    public function get_table_info($property) {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
     }
 
 }
