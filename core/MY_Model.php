@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * validation-in-model support, event callbacks and more.
  *
  * @author		Walid Aqleh <waleedakleh23@hotmail.com>
- * @version		1.0.0
+ * @version		1.1.0
  * @based on	        codeigniter-base-model by jamierumbelow (https://github.com/jamierumbelow/codeigniter-base-model)
  * @link https://github.com/waqleh/codeigniter-better-query-builder
  */
